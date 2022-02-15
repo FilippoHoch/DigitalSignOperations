@@ -100,9 +100,12 @@ public class OpenKeyController implements Initializable {
 
     private String openFile() throws IOException {
         file = fileChooser.showOpenDialog(owner);
+        if (file.isFile() && file != null){
         fileReader = new FileReader(file);
         bufferedReader = new BufferedReader(fileReader);
         return bufferedReader.readLine();
+        }
+        return null;
     }
 
 

@@ -10,6 +10,7 @@ module it.castelli.sistemi.main {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires java.desktop;
+    requires java.prefs;
 
     opens it.castelli.sistemi.main to javafx.fxml;
     exports it.castelli.sistemi.main;
