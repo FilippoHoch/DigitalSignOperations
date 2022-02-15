@@ -6,10 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
-
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class MainApplication extends Application {
 
@@ -18,7 +16,6 @@ public class MainApplication extends Application {
     private static final double DEFAULT_X = 10;
     private static final double DEFAULT_Y = 10;
     private static final String NODE_NAME = "ViewSwitcher";
-
 
 
     @Override

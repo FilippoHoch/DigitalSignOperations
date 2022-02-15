@@ -39,18 +39,20 @@ public class OpenKeyController implements Initializable {
     @FXML
     private TextField pairName;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Keys", "*.key"));
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Keys", "*.key"));
         loadingProgressPublic = false;
         loadingProgressPrivate = false;
         load.setDisable(true);
+
     }
 
     @FXML
     void cancelLoad(ActionEvent event) {
-        Stage stage = (Stage) load.getScene().getWindow();
-        stage.close();
+        Stage currentStage = (Stage) load.getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
@@ -61,34 +63,43 @@ public class OpenKeyController implements Initializable {
         }
         MainController.getInstance().setLoadKey(true);
         MainController.getInstance().newKeys = new Keys(pairName.getText(), publicKey, privateKey);
-        Stage stage = (Stage) load.getScene().getWindow();
-        stage.close();
+        Stage currentStage = (Stage) load.getScene().getWindow();
+        currentStage.close();
     }
 
     @FXML
     void loadPrivate(ActionEvent event) {
-        // TODO: 15/02/2022 set priority of view on fileChooser
+        Stage currentStage = (Stage) load.getScene().getWindow();
+        currentStage.setAlwaysOnTop(false);
         fileChooser.setTitle("Open Private key");
         try {
             privateKey = openFile();
+            if (privateKey == null)
+                return;
             loadingProgressPrivate = true;
             checkLoadingProgress();
         } catch (IOException e) {
             e.printStackTrace();
+
         }
+        currentStage.setAlwaysOnTop(true);
     }
 
     @FXML
     void loadPublic(ActionEvent event) {
-        // TODO: 15/02/2022 set priority of view on fileChooser
+        Stage currentStage = (Stage) load.getScene().getWindow();
+        currentStage.setAlwaysOnTop(false);
         fileChooser.setTitle("Open Public key");
         try {
             publicKey = openFile();
+            if (publicKey == null)
+                return;
             loadingProgressPublic = true;
             checkLoadingProgress();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        currentStage.setAlwaysOnTop(true);
     }
 
     @FXML
@@ -100,12 +111,11 @@ public class OpenKeyController implements Initializable {
 
     private String openFile() throws IOException {
         file = fileChooser.showOpenDialog(owner);
-        if (file.isFile() && file != null){
+        if (file == null)
+            return null;
         fileReader = new FileReader(file);
         bufferedReader = new BufferedReader(fileReader);
         return bufferedReader.readLine();
-        }
-        return null;
     }
 
 

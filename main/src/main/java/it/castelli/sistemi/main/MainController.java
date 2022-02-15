@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -132,7 +131,7 @@ public class MainController implements Initializable {
 
     @FXML
     void saveKey() {
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", "*.key"));
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Key", "*.key"));
         // Saving public key
         fileChooser.setTitle("Save public key");
         fileSaver = fileChooser.showSaveDialog(owner);
@@ -171,7 +170,7 @@ public class MainController implements Initializable {
 
     @FXML
     void signDocument() throws IOException {
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All types", "*"));
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("All types", "*"));
         fileChooser.setTitle("Open document to sign");
         File file = fileChooser.showOpenDialog(owner);
         FileReader fileReader = new FileReader(file);
@@ -192,7 +191,7 @@ public class MainController implements Initializable {
     @FXML
     void verifyDocument() throws FileNotFoundException {
         fileChooser.setTitle("Open document to verify");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All types", "*"));
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("All types", "*"));
         File file = fileChooser.showOpenDialog(owner);
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
