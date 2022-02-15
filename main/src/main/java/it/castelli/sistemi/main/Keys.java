@@ -10,6 +10,7 @@ public class Keys {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
     }
+
     public String getName() {
         return name;
     }

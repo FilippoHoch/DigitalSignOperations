@@ -18,7 +18,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -101,14 +100,16 @@ public class MainController implements Initializable {
         });
     }
 
+    // TODO: 15/02/2022 actually save the files
+
     @FXML
     void saveKey(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save public key");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", ".key"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", "*.key"));
         fileChooser.showSaveDialog(owner);
         fileChooser.setTitle("Save private key");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", ".key"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", "*.key"));
         fileChooser.showSaveDialog(owner);
         /*
         item.setOnAction(new EventHandler<ActionEvent>() {
@@ -122,15 +123,16 @@ public class MainController implements Initializable {
 
     @FXML
     void selectKey(MouseEvent event) {
-        if(keyListView.getSelectionModel().getSelectedIndex() != -1){
+        if (keyListView.getSelectionModel().getSelectedIndex() != -1) {
             saveKey.setDisable(false);
             signButton.setDisable(false);
             verifyButton.setDisable(false);
         }
 
     }
+
     @FXML
-    private void loadNewKey(){
+    private void loadNewKey() {
         keyListView.getItems().add(newKeys);
     }
 
