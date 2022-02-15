@@ -59,7 +59,7 @@ public class OpenKeyController implements Initializable {
             pairName.setText("Keys " + MainController.getInstance().counterClass);
             MainController.getInstance().counterClass++;
         }
-        MainController.getInstance().setSearch(true);
+        MainController.getInstance().setLoadKey(true);
         MainController.getInstance().newKeys = new Keys(pairName.getText(), publicKey, privateKey);
         Stage stage = (Stage) load.getScene().getWindow();
         stage.close();
@@ -67,6 +67,7 @@ public class OpenKeyController implements Initializable {
 
     @FXML
     void loadPrivate(ActionEvent event) {
+        // TODO: 15/02/2022 set priority of view on fileChooser
         fileChooser.setTitle("Open Private key");
         try {
             privateKey = openFile();
@@ -79,7 +80,7 @@ public class OpenKeyController implements Initializable {
 
     @FXML
     void loadPublic(ActionEvent event) {
-
+        // TODO: 15/02/2022 set priority of view on fileChooser
         fileChooser.setTitle("Open Public key");
         try {
             publicKey = openFile();
