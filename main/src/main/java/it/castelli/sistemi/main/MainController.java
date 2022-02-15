@@ -15,16 +15,22 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController implements Initializable{
 
     public int counterClass = 0;
     private boolean search = false;
     public Keys newKeys;
+    private Keys currentKeys;
+
+    FileChooser fileChooser = new FileChooser();
+    File fileSaver;
 
     public void setSearch(boolean search) {
         this.search = search;
@@ -58,6 +64,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", "*.key"));
         instance = this;
         saveKey.setDisable(true);
         signButton.setDisable(true);
@@ -100,25 +107,21 @@ public class MainController implements Initializable {
         });
     }
 
-    // TODO: 15/02/2022 actually save the files
 
     @FXML
     void saveKey(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
+        // Saving public key
         fileChooser.setTitle("Save public key");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", "*.key"));
-        fileChooser.showSaveDialog(owner);
+        fileSaver = fileChooser.showSaveDialog(owner);
+        if(fileSaver != null){
+            SaveFile(currentKeys.getPublicKey(), fileSaver);
+        }
+        // Saving private key
         fileChooser.setTitle("Save private key");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Key", "*.key"));
-        fileChooser.showSaveDialog(owner);
-        /*
-        item.setOnAction(new EventHandler<ActionEvent>() {
-         public void handle(ActionEvent event) {
-            //Opening a dialog box
-            fileChooser.showSaveDialog(stage);
-         }
-      });
-         */
+        fileSaver = fileChooser.showSaveDialog(owner);
+        if(fileSaver != null){
+            SaveFile(currentKeys.getPrivateKey(), fileSaver);
+        }
     }
 
     @FXML
@@ -127,6 +130,9 @@ public class MainController implements Initializable {
             saveKey.setDisable(false);
             signButton.setDisable(false);
             verifyButton.setDisable(false);
+            currentKeys = keyListView.getSelectionModel().getSelectedItem();
+            privateKey.setText(currentKeys.getPrivateKey());
+            publicKey.setText(currentKeys.getPublicKey());
         }
 
     }
@@ -146,4 +152,15 @@ public class MainController implements Initializable {
 
     }
 
+
+    private void SaveFile(String content, File file){
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 }
